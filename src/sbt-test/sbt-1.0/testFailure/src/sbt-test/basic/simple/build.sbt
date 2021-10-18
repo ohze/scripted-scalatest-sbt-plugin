@@ -1,4 +1,4 @@
-import com.github.daniel.shuy.sbt.scripted.scalatest.ScriptedScalaTestSuiteMixin
+import com.github.daniel.shuy.sbt.scripted.scalatest.ScriptedScalatestSuiteMixin
 import org.scalatest.Assertions._
 import org.scalatest.wordspec.AnyWordSpec
 
@@ -7,8 +7,8 @@ lazy val testBasicSimple = project
   .settings(
     name := "test/basic/simple",
 
-    scriptedScalaTestStacks := SbtScriptedScalaTest.FullStacks,
-    scriptedScalaTestSpec := Some(new AnyWordSpec with ScriptedScalaTestSuiteMixin {
+    scriptedScalatestStacks := SbtScriptedScalatest.FullStacks,
+    scriptedScalatestSpec := Some(new AnyWordSpec with ScriptedScalatestSuiteMixin {
       override val sbtState: State = state.value
 
       "scripted test" should {

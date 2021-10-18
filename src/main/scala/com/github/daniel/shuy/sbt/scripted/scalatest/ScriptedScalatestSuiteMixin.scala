@@ -3,8 +3,8 @@ package com.github.daniel.shuy.sbt.scripted.scalatest
 import org.scalatest._
 import sbt.{Keys, Project, State}
 
-trait ScriptedScalaTestSuiteMixin
-    extends ScriptedScalaTestSuite
+trait ScriptedScalatestSuiteMixin
+    extends ScriptedScalatestSuite
     with BeforeAndAfterEach {
   this: Suite =>
 

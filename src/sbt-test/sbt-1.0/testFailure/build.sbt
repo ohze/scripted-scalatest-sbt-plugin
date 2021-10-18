@@ -1,4 +1,4 @@
-import com.github.daniel.shuy.sbt.scripted.scalatest.ScriptedScalaTestSuiteMixin
+import com.github.daniel.shuy.sbt.scripted.scalatest.ScriptedScalatestSuiteMixin
 import org.scalatest.wordspec.AnyWordSpec
 
 lazy val testFailure = project
@@ -9,12 +9,12 @@ lazy val testFailure = project
 
     scriptedBufferLog := false,
 
-    scriptedScalaTestStacks := SbtScriptedScalaTest.FullStacks,
-    scriptedScalaTestSpec := Some(new AnyWordSpec with ScriptedScalaTestSuiteMixin {
+    scriptedScalatestStacks := SbtScriptedScalatest.FullStacks,
+    scriptedScalatestSpec := Some(new AnyWordSpec with ScriptedScalatestSuiteMixin {
       override val sbtState: State = state.value
 
       "scripted" should {
-        "fail on ScalaTest failure" in {
+        "fail on Scalatest failure" in {
           assert(1 == 2)
           assertThrows[sbt.Incomplete](
             Project.extract(sbtState)

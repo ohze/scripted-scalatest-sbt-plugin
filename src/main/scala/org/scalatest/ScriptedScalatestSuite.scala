@@ -17,7 +17,7 @@ import scala.util.control.NonFatal
   * This class has the same package as [[org.scalatest.Suite]] so that it can access protected or package private
   * members.
   */
-trait ScriptedScalaTestSuite extends Suite {
+trait ScriptedScalatestSuite extends Suite {
   thisSuite: Suite =>
 
   /**
