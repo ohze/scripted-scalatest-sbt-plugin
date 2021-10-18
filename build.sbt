@@ -7,23 +7,8 @@ lazy val `sbt-scripted-scalatest` = project
       "org.scalatest" %% "scalatest-core" % "3.2.10"
     ),
     pluginCrossBuild / sbtVersion := "1.2.6", // minimum sbt version
-    scriptedLaunchOpts += "-Xmx1024M",
-    scripted := scripted.dependsOn(scriptedPrepare).evaluated,
-    scriptedBufferLog := false,
+    SbtScriptedSettings("org.scalatest::scalatest-wordspec:3.2.10"),
   )
-
-def scriptedPrepare = Def.task {
-  for {
-    prjDir <- (
-      PathFinder(sbtTestDirectory.value) * DirectoryFilter * DirectoryFilter
-      ).get()
-  } IO.write(
-    prjDir / "project/plugins.sbt",
-    s"""addSbtPlugin("${organization.value}" % "${moduleName.value}" % "${version.value}")
-       |libraryDependencies += "org.scalatest" %% "scalatest-wordspec" % "3.2.10"
-       |""".stripMargin
-  )
-}
 
 inThisBuild(
   Seq(

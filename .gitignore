@@ -1,5 +1,6 @@
 **/sbt-test/*/*/project/build.properties
 **/sbt-test/*/*/project/plugins.sbt
+**/sbt-test/*/*/test
 .bsp
 
 # Created by .ignore support plugin (hsz.mobi)

@@ -1,5 +1,4 @@
 import com.github.daniel.shuy.sbt.scripted.scalatest.ScriptedScalatestSuiteMixin
-import org.scalatest.Assertions._
 import org.scalatest.wordspec.AnyWordSpec
 
 lazy val testBasicSimple = project

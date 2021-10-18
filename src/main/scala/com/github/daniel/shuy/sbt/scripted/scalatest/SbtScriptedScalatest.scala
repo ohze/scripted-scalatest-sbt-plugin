@@ -2,6 +2,7 @@ package com.github.daniel.shuy.sbt.scripted.scalatest
 
 import org.scalatest.{ScriptedScalatestSuite, Suite}
 import sbt._
+import sbt.Def.Initialize
 import sbt.Keys.streams
 
 object SbtScriptedScalatest extends AutoPlugin {
@@ -43,22 +44,21 @@ object SbtScriptedScalatest extends AutoPlugin {
     scriptedScalatestStacks := NoStacks,
     scriptedScalatestStats := true,
     scriptedScalatestSpec := None,
-    scriptedScalatest := {
+    scriptedScalatest := Def.taskDyn {
+      val suite = scriptedScalatestSpec.value
       // do nothing if not configured
-      scriptedScalatestSpec.value match {
-        case Some(suite) => executeScriptedTestsTask(suite)
-        case None =>
-          logger.value.warn(
-            s"${scriptedScalatestSpec.key.label} not configured, no tests will be run..."
-          )
+      if(suite.nonEmpty) executeScriptedTestsTask(suite.get)
+      else Def.task {
+        streams.value.log.warn(
+          s"${scriptedScalatestSpec.key.label} not configured, no tests will be run..."
+        )
       }
-    }
+    }.value
   )
 
   private[this] def executeScriptedTestsTask(
       suite: ScriptedScalatestSuite
-  ): Unit = Def.task {
-    println("@@@@@@@")
+  ): Initialize[Task[Unit]] = Def.task {
     val stacks = scriptedScalatestStacks.value
     val status = suite.executeScripted(
       durations = scriptedScalatestDurations.value,

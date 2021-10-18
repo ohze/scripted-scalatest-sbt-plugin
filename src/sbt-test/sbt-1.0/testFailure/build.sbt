@@ -7,7 +7,7 @@ lazy val testFailure = project
   .settings(
     name := "test/sbt-0.13/testFailure",
 
-    scriptedBufferLog := false,
+    SbtScriptedSettings("org.scalatest::scalatest-wordspec:3.2.10"),
 
     scriptedScalatestStacks := SbtScriptedScalatest.FullStacks,
     scriptedScalatestSpec := Some(new AnyWordSpec with ScriptedScalatestSuiteMixin {
@@ -15,11 +15,10 @@ lazy val testFailure = project
 
       "scripted" should {
         "fail on Scalatest failure" in {
-          assert(1 == 2)
           assertThrows[sbt.Incomplete](
             Project.extract(sbtState)
               .runInputTask(scripted, "", sbtState))
         }
       }
-    })
+    }),
   )
