@@ -63,6 +63,7 @@ object SbtScriptedScalaTest extends AutoPlugin {
   private[this] def executeScriptedTestsTask(
       suite: ScriptedScalaTestSuite
   ): Unit = Def.task {
+    println("@@@@@@@")
     val stacks = scriptedScalaTestStacks.value
     val status = suite.executeScripted(
       durations = scriptedScalaTestDurations.value,

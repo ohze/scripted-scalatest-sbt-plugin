@@ -1,5 +1,4 @@
 import com.github.daniel.shuy.sbt.scripted.scalatest.ScriptedScalaTestSuiteMixin
-import org.scalatest.Assertions._
 import org.scalatest.wordspec.AnyWordSpec
 
 lazy val testFailure = project
@@ -8,13 +7,6 @@ lazy val testFailure = project
   .settings(
     name := "test/sbt-0.13/testFailure",
 
-    sys.props.get("plugin.version") match {
-      case Some(pluginVersion) => scriptedLaunchOpts := { scriptedLaunchOpts.value ++
-        Seq("-Xmx1024M", "-Dplugin.version=" + pluginVersion)
-      }
-      case _ => sys.error("""|The system property 'plugin.version' is not defined.
-                             |Specify this property using the scriptedLaunchOpts -D.""".stripMargin)
-    },
     scriptedBufferLog := false,
 
     scriptedScalaTestStacks := SbtScriptedScalaTest.FullStacks,
@@ -23,6 +15,7 @@ lazy val testFailure = project
 
       "scripted" should {
         "fail on ScalaTest failure" in {
+          assert(1 == 2)
           assertThrows[sbt.Incomplete](
             Project.extract(sbtState)
               .runInputTask(scripted, "", sbtState))

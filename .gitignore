@@ -1,3 +1,7 @@
+**/sbt-test/*/*/project/build.properties
+**/sbt-test/*/*/project/plugins.sbt
+.bsp
+
 # Created by .ignore support plugin (hsz.mobi)
 ### Scala template
 *.class
