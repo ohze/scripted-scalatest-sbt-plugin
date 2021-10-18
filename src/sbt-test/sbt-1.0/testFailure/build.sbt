@@ -1,4 +1,3 @@
-import com.github.daniel.shuy.sbt.scripted.scalatest.ScriptedScalatestSuiteMixin
 import org.scalatest.wordspec.AnyWordSpec
 
 lazy val testFailure = project

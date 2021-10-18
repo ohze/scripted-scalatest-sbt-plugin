@@ -17,6 +17,7 @@ object SbtScriptedScalatest extends AutoPlugin {
   case object FullStacks extends ScriptedTestStacks(true, true)
 
   object autoImport {
+    type ScriptedScalatestSuiteMixin = com.github.daniel.shuy.sbt.scripted.scalatest.ScriptedScalatestSuiteMixin
     lazy val scriptedScalatestDurations = settingKey[Boolean](
       "If false, will not display durations of tests."
     )
