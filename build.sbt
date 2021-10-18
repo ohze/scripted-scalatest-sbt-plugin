@@ -1,14 +1,16 @@
-lazy val `sbt-scripted-scalatest` = project
-  .in(file("."))
+lazy val `sbt-scripted-scalatest` = (project in file("parent"))
   .enablePlugins(SbtPlugin)
   .settings(
-    organization := "com.github.daniel-shuy",
-    libraryDependencies ++= Seq(
-      "org.scalatest" %% "scalatest-core" % "3.2.10"
-    ),
     pluginCrossBuild / sbtVersion := "1.2.6", // minimum sbt version
-    SbtScriptedSettings("org.scalatest::scalatest-wordspec:3.2.10"),
   )
+
+lazy val `sbt-scripted-scalatest-impl` = (project in file("."))
+  .enablePlugins(SbtPlugin)
+  .settings(
+    libraryDependencies += "org.scalatest" %% "scalatest-core" % "3.2.10",
+    pluginCrossBuild / sbtVersion := "1.2.6", // minimum sbt version
+    scriptedScalatestDependencies += "org.scalatest::scalatest-wordspec:3.2.10",
+  ).aggregate(`sbt-scripted-scalatest`)
 
 inThisBuild(
   Seq(
@@ -20,11 +22,17 @@ inThisBuild(
     ),
     developers := List(
       Developer(
+        "thanhbv",
+        "Bui Viet Thanh",
+        "thanhbv@sandinh.net",
+        url("https://sandinh.com")
+      ),
+      Developer(
         "daniel-shuy",
         "Daniel Shuy",
         "daniel_shuy@hotmail.com",
         url("https://github.com/daniel-shuy")
-      )
+      ),
     )
   )
 )
