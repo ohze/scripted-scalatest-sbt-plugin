@@ -17,7 +17,8 @@ object SbtScriptedScalatest extends AutoPlugin {
   case object FullStacks extends ScriptedTestStacks(true, true)
 
   object autoImport {
-    type ScriptedScalatestSuiteMixin = com.github.daniel.shuy.sbt.scripted.scalatest.ScriptedScalatestSuiteMixin
+    type ScriptedScalatestSuiteMixin =
+      com.github.daniel.shuy.sbt.scripted.scalatest.ScriptedScalatestSuiteMixin
     lazy val scriptedScalatestDurations = settingKey[Boolean](
       "If false, will not display durations of tests."
     )
@@ -28,10 +29,12 @@ object SbtScriptedScalatest extends AutoPlugin {
       "If false, will not display various statistics of tests."
     )
     lazy val scriptedScalatestSpec =
-      taskKey[Option[Suite with ScriptedScalatestSuiteMixin]]("The Scalatest Spec.")
+      taskKey[Option[Suite with ScriptedScalatestSuiteMixin]](
+        "The Scalatest Spec."
+      )
 
     lazy val scriptedScalatest = taskKey[Unit](
-    "Executes all Scalatest tests for SBT plugin."
+      "Executes all Scalatest tests for SBT plugin."
     )
   }
   import autoImport._
@@ -48,12 +51,13 @@ object SbtScriptedScalatest extends AutoPlugin {
     scriptedScalatest := Def.taskDyn {
       val suite = scriptedScalatestSpec.value
       // do nothing if not configured
-      if(suite.nonEmpty) executeScriptedTestsTask(suite.get)
-      else Def.task {
-        streams.value.log.warn(
-          s"${scriptedScalatestSpec.key.label} not configured, no tests will be run..."
-        )
-      }
+      if (suite.nonEmpty) executeScriptedTestsTask(suite.get)
+      else
+        Def.task {
+          streams.value.log.warn(
+            s"${scriptedScalatestSpec.key.label} not configured, no tests will be run..."
+          )
+        }
     }.value
   )
 

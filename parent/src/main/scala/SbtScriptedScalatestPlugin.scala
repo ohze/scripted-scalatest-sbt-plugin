@@ -33,23 +33,24 @@ object SbtScriptedScalatestPlugin extends AutoPlugin {
 
   private def scriptedPrepareTask: Initialize[Task[Unit]] = Def.task {
     val content = pluginsContent.value
-    val finder = PathFinder(sbtTestDirectory.value) * DirectoryFilter * DirectoryFilter
-    for(prjDir <- finder.get()){
+    val finder =
+      PathFinder(sbtTestDirectory.value) * DirectoryFilter * DirectoryFilter
+    for (prjDir <- finder.get()) {
       IO.write(prjDir / "project/plugins.sbt", content)
       IO.write(prjDir / "test", "> scriptedScalatest\n")
     }
   }
 
   /** org(:: | :)name:version -> "org" (%% | %) "name" % "version" */
-  private def colon2Percent(debs: Seq[String]): Seq[String] =
-    debs.map { _
-      .replace("::", "\" %% \"")
-      .replace(":", "\" % \"")
-    }.map("\"" + _ + "\"")
+  private def colon2Percent(debs: Seq[String]): Seq[String] = debs
+    .map {
+      _.replace("::", "\" %% \"")
+        .replace(":", "\" % \"")
+    }
+    .map("\"" + _ + "\"")
 
   private def pluginsContent: Initialize[String] = Def.setting {
-    val (pluginDeps, normalDeps) = scriptedScalatestDependencies
-      .value
+    val (pluginDeps, normalDeps) = scriptedScalatestDependencies.value
       .partition(_.startsWith("sbt:"))
     val plugins = colon2Percent(pluginDeps.map(_.stripPrefix("sbt:")))
       .map(d => s"addSbtPlugin($d)")

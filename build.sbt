@@ -26,8 +26,9 @@ lazy val `sbt-scripted-scalatest-impl` = (project in file("."))
     ),
     scripted := scripted
       .dependsOn(`sbt-scripted-scalatest` / publishLocal)
-      .evaluated
-  ).aggregate(`sbt-scripted-scalatest`)
+      .evaluated,
+  )
+  .aggregate(`sbt-scripted-scalatest`)
 
 inThisBuild(
   Seq(

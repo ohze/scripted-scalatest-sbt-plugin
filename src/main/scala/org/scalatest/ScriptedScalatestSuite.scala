@@ -13,15 +13,13 @@ import org.scalatest.tools.StandardOutReporter
 
 import scala.util.control.NonFatal
 
-/**
-  * This class has the same package as [[org.scalatest.Suite]] so that it can access protected or package private
+/** This class has the same package as [[org.scalatest.Suite]] so that it can access protected or package private
   * members.
   */
 trait ScriptedScalatestSuite extends Suite {
   thisSuite: Suite =>
 
-  /**
-    * Copied from [[org.scalatest.Suite.execute(String,org.scalatest.ConfigMap,Boolean,Boolean,Boolean,Boolean,Boolean):Unit]],
+  /** Copied from [[org.scalatest.Suite.execute(String,org.scalatest.ConfigMap,Boolean,Boolean,Boolean,Boolean,Boolean):Unit]],
     * but modified to return [[org.scalatest.Status]] instead of [[scala.Unit]].
     *
     * @return [[org.scalatest.FailedStatus]] on error,
