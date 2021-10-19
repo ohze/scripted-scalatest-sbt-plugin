@@ -55,7 +55,7 @@ object SbtScriptedScalatestPlugin extends AutoPlugin {
     val plugins = colon2Percent(pluginDeps.map(_.stripPrefix("sbt:")))
       .map(d => s"addSbtPlugin($d)")
       .mkString("\n")
-    val debs = colon2Percent(normalDeps).mkString("\n  ")
+    val debs = colon2Percent(normalDeps).mkString(",\n  ")
     s"$plugins\nlibraryDependencies ++= Seq(\n  $debs\n)"
   }
 }
