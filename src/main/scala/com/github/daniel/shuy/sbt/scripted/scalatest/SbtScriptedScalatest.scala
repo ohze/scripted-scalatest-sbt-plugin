@@ -39,10 +39,6 @@ object SbtScriptedScalatest extends AutoPlugin {
   }
   import autoImport._
 
-  private[this] lazy val logger = Def.task[Logger] {
-    streams.value.log
-  }
-
   override def projectSettings: Seq[Setting[_]] = Seq(
     scriptedScalatestDurations := true,
     scriptedScalatestStacks := NoStacks,
