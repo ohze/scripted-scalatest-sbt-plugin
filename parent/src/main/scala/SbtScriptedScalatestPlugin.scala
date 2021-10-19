@@ -8,11 +8,14 @@ object SbtScriptedScalatestPlugin extends AutoPlugin {
   override def requires = SbtPlugin
   override def trigger = allRequirements
 
-  val scriptedPrepare = taskKey[Unit]("scriptedPrepare")
+  val scriptedPrepare = taskKey[Unit](
+    "Generate src/sbt-test/*/*/{project/plugins.sbt, test}"
+  )
 
   object autoImport {
     val scriptedScalatestDependencies = settingKey[Seq[String]](
-      "ex \"org.scalatest::scalatest-funsuite:3.2.10\""
+      "[sbt:]organization(:: or :)name:(version)." +
+        " ex org.scalatest::scalatest-funsuite:3.2.10 or sbt:com.sandinh:sbt-devops:5.0.12"
     )
   }
   import autoImport._
@@ -22,31 +25,36 @@ object SbtScriptedScalatestPlugin extends AutoPlugin {
     scriptedBufferLog := false,
     scripted := scripted.dependsOn(scriptedPrepare).evaluated,
     scriptedPrepare := scriptedPrepareTask.value,
-    scriptedScalatestDependencies := Nil,
+    scriptedScalatestDependencies := Seq(
+      s"sbt:${organization.value}:${moduleName.value}:${version.value}",
+      s"sbt:com.sandinh:sbt-scripted-scalatest-impl:${SbtScriptedScalatestVersion.version}",
+    ),
   )
 
-  /** Prepare [project/plugins.sbt, test] files for all
-    * scripted test project in src/sbt-test/ * / *
-    */
-  def scriptedPrepareTask: Initialize[Task[Unit]] = Def.task {
-    def debs = scriptedScalatestDependencies.value.map { _
-      .replace("::", "\" %% \"")
-      .replace(":", "\" % \"")
-    }.map(d => s"""  "$d"""")
-      .mkString("\n")
-
-    for {
-      prjDir <- (
-        PathFinder(sbtTestDirectory.value) * DirectoryFilter * DirectoryFilter
-        ).get()
-    } {
-      IO.write(
-        prjDir / "project/plugins.sbt",
-        s"""addSbtPlugin("${organization.value}" % "${moduleName.value}" % "${version.value}")
-           |libraryDependencies ++= Seq(\n$debs\n)
-           |""".stripMargin
-      )
+  private def scriptedPrepareTask: Initialize[Task[Unit]] = Def.task {
+    val content = pluginsContent.value
+    val finder = PathFinder(sbtTestDirectory.value) * DirectoryFilter * DirectoryFilter
+    for(prjDir <- finder.get()){
+      IO.write(prjDir / "project/plugins.sbt", content)
       IO.write(prjDir / "test", "> scriptedScalatest\n")
     }
+  }
+
+  /** org(:: | :)name:version -> "org" (%% | %) "name" % "version" */
+  private def colon2Percent(debs: Seq[String]): Seq[String] =
+    debs.map { _
+      .replace("::", "\" %% \"")
+      .replace(":", "\" % \"")
+    }.map("\"" + _ + "\"")
+
+  private def pluginsContent: Initialize[String] = Def.setting {
+    val (pluginDeps, normalDeps) = scriptedScalatestDependencies
+      .value
+      .partition(_.startsWith("sbt:"))
+    val plugins = colon2Percent(pluginDeps.map(_.stripPrefix("sbt:")))
+      .map(d => s"addSbtPlugin($d)")
+      .mkString("\n")
+    val debs = colon2Percent(normalDeps).mkString("\n  ")
+    s"$plugins\nlibraryDependencies ++= Seq(\n  $debs\n)"
   }
 }
