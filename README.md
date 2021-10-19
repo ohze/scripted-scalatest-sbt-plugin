@@ -62,7 +62,7 @@ Ex, for [The FunSuite style](https://www.scalatest.org/user_guide/selecting_a_st
 ```scala
 scriptedScalatestDependencies ++= Seq(
   "org.scalatest::scalatest-funsuite:3.2.10",
-  "org.scalatest:scalatest-mustmatchers:3.2.10",
+  "org.scalatest::scalatest-mustmatchers:3.2.10",
 )
 ```
 To add `addSbtPlugin("com.sandinh" % "sbt-devops" % "5.0.12")` into the generated `project/plugins.sbt`, set:
