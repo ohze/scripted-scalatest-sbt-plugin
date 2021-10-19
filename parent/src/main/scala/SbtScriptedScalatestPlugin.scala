@@ -32,12 +32,22 @@ object SbtScriptedScalatestPlugin extends AutoPlugin {
   )
 
   private def scriptedPrepareTask: Initialize[Task[Unit]] = Def.task {
+    val log = streams.value.log
     val content = pluginsContent.value
     val finder =
       PathFinder(sbtTestDirectory.value) * DirectoryFilter * DirectoryFilter
     for (prjDir <- finder.get()) {
+      // delete target, project/project/target, */target directories
+      IO.delete(
+        Seq("target", "project/project/target").map(prjDir / _) ++
+          (PathFinder(prjDir) * DirectoryFilter * "target").get()
+      )
       IO.write(prjDir / "project/plugins.sbt", content)
       IO.write(prjDir / "test", "> scriptedScalatest\n")
+
+      log.info(
+        s"Prepared $prjDir\nYou can open that as a project in Intellij or vscode"
+      )
     }
   }
 
