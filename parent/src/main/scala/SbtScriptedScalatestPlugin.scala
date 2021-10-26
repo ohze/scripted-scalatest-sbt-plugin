@@ -48,7 +48,9 @@ object SbtScriptedScalatestPlugin extends AutoPlugin {
       }
 
       IO.write(prjDir / "project/plugins.sbt", content)
-      IO.write(prjDir / "test", "> scriptedScalatest\n")
+
+      val testFile = prjDir / "test"
+      if (!testFile.exists()) IO.write(testFile, "> scriptedScalatest\n")
 
       log.info(
         s"Prepared $prjDir\nYou can open that as a project in Intellij or vscode"
