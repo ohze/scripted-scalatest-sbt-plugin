@@ -36,12 +36,17 @@ object SbtScriptedScalatestPlugin extends AutoPlugin {
     val content = pluginsContent.value
     val finder =
       PathFinder(sbtTestDirectory.value) * DirectoryFilter * DirectoryFilter
+    val sbtV = (pluginCrossBuild / sbtVersion).?.value
     for (prjDir <- finder.get()) {
       // delete target, project/project/target, */target directories
       IO.delete(
         Seq("target", "project/project/target").map(prjDir / _) ++
           (PathFinder(prjDir) * DirectoryFilter * "target").get()
       )
+      sbtV.foreach { v =>
+        IO.write(prjDir / "project/build.properties", s"sbt.version=$v\n")
+      }
+
       IO.write(prjDir / "project/plugins.sbt", content)
       IO.write(prjDir / "test", "> scriptedScalatest\n")
 
