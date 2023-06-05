@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         java: [ '8' ]
-        scala: [ '2.12.15' ]
+        scala: [ '2.12.18' ]
     steps:
       - uses: actions/checkout@v2
       - id: commitMsg
