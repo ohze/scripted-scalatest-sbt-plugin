@@ -1,4 +1,4 @@
-addSbtPlugin("com.sandinh" % "sbt-devops-oss" % "5.0.12")
+addSbtPlugin("com.sandinh" % "sbt-devops-oss" % "6.8.0")
 
 Compile / unmanagedSourceDirectories +=
   baseDirectory.value.getParentFile / "parent/src/main/scala"

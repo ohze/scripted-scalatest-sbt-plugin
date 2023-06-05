@@ -65,9 +65,9 @@ scriptedScalatestDependencies ++= Seq(
   "org.scalatest::scalatest-mustmatchers:3.2.10",
 )
 ```
-To add `addSbtPlugin("com.sandinh" % "sbt-devops" % "5.0.12")` into the generated `project/plugins.sbt`, set:
+To add `addSbtPlugin("com.sandinh" % "sbt-devops" % "6.8.0")` into the generated `project/plugins.sbt`, set:
 ```scala
-scriptedScalatestDependencies += "sbt:com.sandinh:sbt-devops:5.0.12"
+scriptedScalatestDependencies += "sbt:com.sandinh:sbt-devops:6.8.0"
 ```
 
 ### Step 3. Remove `src/sbt-test/*/*/{test, project/plugins.sbt}`
@@ -92,7 +92,7 @@ import org.scalatest.matchers.must.Matchers
 lazy val root = (project in file("."))
   .settings(
     version := "0.1",
-    scalaVersion := "3.0.2",
+    scalaVersion := "3.3.0",
     assembly/ assemblyJarName := "foo.jar",
     scriptedScalatestSpec := Some(new AnyFunSuite with Matchers with ScriptedScalatestSuiteMixin {
       override val sbtState: State = state.value
