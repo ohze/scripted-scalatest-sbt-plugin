@@ -17,12 +17,12 @@ lazy val `sbt-scripted-scalatest` = (project in file("parent"))
 lazy val `sbt-scripted-scalatest-impl` = (project in file("."))
   .enablePlugins(SbtPlugin)
   .settings(
-    libraryDependencies += "org.scalatest" %% "scalatest-core" % "3.2.10",
+    libraryDependencies += "org.scalatest" %% "scalatest-core" % "3.2.16",
     pluginCrossBuild / sbtVersion := "1.2.6", // minimum sbt version
     scriptedScalatestDependencies := Seq(
       s"sbt:${organization.value}:${moduleName.value}:${version.value}",
       s"sbt:${organization.value}:sbt-scripted-scalatest:${version.value}",
-      "org.scalatest::scalatest-wordspec:3.2.10"
+      "org.scalatest::scalatest-wordspec:3.2.16"
     ),
     scripted := scripted
       .dependsOn(`sbt-scripted-scalatest` / publishLocal)

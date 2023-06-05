@@ -15,7 +15,7 @@ object SbtScriptedScalatestPlugin extends AutoPlugin {
   object autoImport {
     val scriptedScalatestDependencies = settingKey[Seq[String]](
       "[sbt:]organization(:: or :)name:(version)." +
-        " ex org.scalatest::scalatest-funsuite:3.2.10 or sbt:com.sandinh:sbt-devops:5.0.12"
+        " ex org.scalatest::scalatest-funsuite:3.2.16 or sbt:com.sandinh:sbt-devops:6.8.0"
     )
   }
   import autoImport._

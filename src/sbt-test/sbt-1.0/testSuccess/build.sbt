@@ -7,8 +7,8 @@ lazy val testFailure = project
     name := "test/sbt-0.13/testFailure",
 
     scriptedScalatestDependencies ++= Seq(
-      "org.scalatest::scalatest-funsuite:3.2.10",
-      "org.scalatest::scalatest-mustmatchers:3.2.10",
+      "org.scalatest::scalatest-funsuite:3.2.16",
+      "org.scalatest::scalatest-mustmatchers:3.2.16",
     ),
 
     scriptedScalatestSpec := Some(new AnyWordSpec with ScriptedScalatestSuiteMixin {

@@ -6,7 +6,7 @@ lazy val testFailure = project
   .settings(
     name := "test/sbt-0.13/testFailure",
 
-    scriptedScalatestDependencies += "org.scalatest::scalatest-wordspec:3.2.10",
+    scriptedScalatestDependencies += "org.scalatest::scalatest-wordspec:3.2.16",
 
     scriptedScalatestStacks := SbtScriptedScalatest.FullStacks,
     scriptedScalatestSpec := Some(new AnyWordSpec with ScriptedScalatestSuiteMixin {

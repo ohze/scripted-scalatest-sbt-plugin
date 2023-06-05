@@ -17,9 +17,9 @@ This plugin allows you to use any of Scalatest's test [Suites](http://www.scalat
 
 ## Notes
 
--   Do not use Scalatest's [ParallelTestExecution](https://www.scalatest.org/scaladoc/3.2.10/org/scalatest/ParallelTestExecution.html) mixin with this plugin. `ScriptedScalatestSuiteMixin` runs `sbt clean` before each test, which may cause weird side effects when run in parallel.
+-   Do not use Scalatest's [ParallelTestExecution](https://www.scalatest.org/scaladoc/3.2.16/org/scalatest/ParallelTestExecution.html) mixin with this plugin. `ScriptedScalatestSuiteMixin` runs `sbt clean` before each test, which may cause weird side effects when run in parallel.
 -   When executing SBT tasks in tests, use `Project.runTask(<task>, state.value)` instead of `<task>.value`. Calling `<task>.value` declares it as a dependency, which executes before the tests, not when the line is called.
--   When implementing [BeforeAndAfterEach](https://www.scalatest.org/scaladoc/3.2.10/org/scalatest/BeforeAndAfterEach.html)'s `beforeEach`, make sure to invoke `super.beforeEach` afterwards:
+-   When implementing [BeforeAndAfterEach](https://www.scalatest.org/scaladoc/3.2.16/org/scalatest/BeforeAndAfterEach.html)'s `beforeEach`, make sure to invoke `super.beforeEach` afterwards:
 
 ```scala
 override protected def beforeEach(): Unit = {
@@ -51,7 +51,7 @@ See [step 3: src/sbt-test](https://www.scala-sbt.org/1.x/docs/Testing-sbt-plugin
 -      Seq("-Xmx1024M", "-Dplugin.version=" + version.value)
 -    },
 -    scriptedBufferLog := false
-+    scriptedScalatestDependencies += "org.scalatest::scalatest-wordspec:3.2.10",
++    scriptedScalatestDependencies += "org.scalatest::scalatest-wordspec:3.2.16",
    )
 ```
 `scriptedScalatestDependencies` will be used to the auto-generated `plugins.sbt` in all sbt-test's project:
@@ -61,8 +61,8 @@ See [step 3: src/sbt-test](https://www.scala-sbt.org/1.x/docs/Testing-sbt-plugin
 Ex, for [The FunSuite style](https://www.scalatest.org/user_guide/selecting_a_style), set:
 ```scala
 scriptedScalatestDependencies ++= Seq(
-  "org.scalatest::scalatest-funsuite:3.2.10",
-  "org.scalatest::scalatest-mustmatchers:3.2.10",
+  "org.scalatest::scalatest-funsuite:3.2.16",
+  "org.scalatest::scalatest-mustmatchers:3.2.16",
 )
 ```
 To add `addSbtPlugin("com.sandinh" % "sbt-devops" % "6.8.0")` into the generated `project/plugins.sbt`, set:
