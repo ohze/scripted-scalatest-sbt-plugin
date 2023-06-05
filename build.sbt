@@ -27,6 +27,9 @@ lazy val `sbt-scripted-scalatest-impl` = (project in file("."))
     scripted := scripted
       .dependsOn(`sbt-scripted-scalatest` / publishLocal)
       .evaluated,
+    // scalatest 3.2.16, compare to 3.2.10, update scala-xml 1.x to 2.1.0
+    // By adding this setting, we don't need bump sbt-scripted-scalatest to a new major version
+    libraryDependencySchemes += "org.scala-lang.modules" %% "scala-xml" % "always",
   )
   .aggregate(`sbt-scripted-scalatest`)
 

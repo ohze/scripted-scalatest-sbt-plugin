@@ -36,7 +36,7 @@ Require sbt 1.2.x+
 ### Step 1. Add `sbt-scripted-scalatest`
 `project/plugins.sbt`
 ```scala
-addSbtPlugin("com.sandinh" % "sbt-scripted-scalatest" % "3.0.3")
+addSbtPlugin("com.sandinh" % "sbt-scripted-scalatest" % "3.0.4")
 ```
 
 ### Step 2. Add dependencies for your sbt-test's projects
